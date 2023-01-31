@@ -37,9 +37,11 @@ namespace CCFF7R_Trainer
         public void KillPlayer()
         {
             int writeHandle = (int)OpenProcess(0x001F0FFF, false, process.Id);
-            Int64 pointer = IntPtr.Add(process.Modules[0].BaseAddress, 0x0718DC8A).ToInt64();
+            Int64 deathAddress = IntPtr.Add(process.Modules[0].BaseAddress, 0x0718DC8A).ToInt64();
+            Int64 zackHpAddress = IntPtr.Add(process.Modules[0].BaseAddress, 0x0718DC28).ToInt64();
             Int32 returnval = 0;
-            WriteProcessMemory(writeHandle, pointer, new byte[] { (byte)1 }, 1, out returnval);
+            WriteProcessMemory(writeHandle, deathAddress, new byte[] { (byte)1 }, 1, out returnval);
+            WriteProcessMemory(writeHandle, zackHpAddress, BitConverter.GetBytes(0), 4, out returnval);
         }
 
         public byte GetBattleState()

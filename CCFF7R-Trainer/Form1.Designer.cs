@@ -33,19 +33,40 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.gameProcessFoundLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.battleStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.checkBoxInstantDeath = new System.Windows.Forms.CheckBox();
             this.dataGridElapsed = new System.Windows.Forms.DataGridView();
             this.Elapsed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.labelBattleState = new System.Windows.Forms.Label();
             this.checkBoxSkipBattles = new System.Windows.Forms.CheckBox();
             this.checkBoxInstantBattleSkip = new System.Windows.Forms.CheckBox();
             this.labelStopwatch = new System.Windows.Forms.Label();
-            this.dataGridHP = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            dataGridHP = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridHP)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElapsed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridHP)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dataGridHP
+            // 
+            this.dataGridHP.AllowUserToAddRows = false;
+            this.dataGridHP.AllowUserToDeleteRows = false;
+            this.dataGridHP.AllowUserToResizeColumns = false;
+            this.dataGridHP.AllowUserToResizeRows = false;
+            this.dataGridHP.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridHP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridHP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridHP.Location = new System.Drawing.Point(12, 172);
+            this.dataGridHP.Name = "dataGridHP";
+            this.dataGridHP.ReadOnly = true;
+            this.dataGridHP.RowHeadersVisible = false;
+            this.dataGridHP.RowTemplate.Height = 25;
+            this.dataGridHP.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridHP.Size = new System.Drawing.Size(164, 252);
+            this.dataGridHP.TabIndex = 7;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -65,7 +86,8 @@
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.White;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gameProcessFoundLabel});
+            this.gameProcessFoundLabel,
+            this.battleStateLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 427);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -80,10 +102,19 @@
             this.gameProcessFoundLabel.Size = new System.Drawing.Size(59, 17);
             this.gameProcessFoundLabel.Text = "Loading...";
             // 
+            // battleStateLabel
+            // 
+            this.battleStateLabel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.battleStateLabel.Name = "battleStateLabel";
+            this.battleStateLabel.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.battleStateLabel.Size = new System.Drawing.Size(78, 17);
+            this.battleStateLabel.Text = "Battle State: 0";
+            this.battleStateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // mainTimer
             // 
             this.mainTimer.Enabled = true;
-            this.mainTimer.Interval = 5;
+            this.mainTimer.Interval = 1;
             this.mainTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // checkBoxInstantDeath
@@ -124,15 +155,6 @@
             this.Elapsed.ReadOnly = true;
             this.Elapsed.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // labelBattleState
-            // 
-            this.labelBattleState.AutoSize = true;
-            this.labelBattleState.Location = new System.Drawing.Point(12, 154);
-            this.labelBattleState.Name = "labelBattleState";
-            this.labelBattleState.Size = new System.Drawing.Size(78, 15);
-            this.labelBattleState.TabIndex = 3;
-            this.labelBattleState.Text = "Battle State: 0";
-            // 
             // checkBoxSkipBattles
             // 
             this.checkBoxSkipBattles.AutoSize = true;
@@ -142,6 +164,7 @@
             this.checkBoxSkipBattles.TabIndex = 5;
             this.checkBoxSkipBattles.Text = "Skip Battles";
             this.checkBoxSkipBattles.UseVisualStyleBackColor = true;
+            this.checkBoxSkipBattles.CheckedChanged += new System.EventHandler(this.checkBoxSkipBattles_CheckedChanged);
             // 
             // checkBoxInstantBattleSkip
             // 
@@ -152,46 +175,40 @@
             this.checkBoxInstantBattleSkip.TabIndex = 6;
             this.checkBoxInstantBattleSkip.Text = "Instant Skip Battle (Glitchy)";
             this.checkBoxInstantBattleSkip.UseVisualStyleBackColor = true;
+            this.checkBoxInstantBattleSkip.CheckedChanged += new System.EventHandler(this.checkBoxInstantBattleSkip_CheckedChanged);
             // 
             // labelStopwatch
             // 
             this.labelStopwatch.AutoSize = true;
-            this.labelStopwatch.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelStopwatch.Location = new System.Drawing.Point(12, 105);
+            this.labelStopwatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelStopwatch.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelStopwatch.Location = new System.Drawing.Point(12, 106);
+            this.labelStopwatch.MinimumSize = new System.Drawing.Size(164, 0);
             this.labelStopwatch.Name = "labelStopwatch";
-            this.labelStopwatch.Size = new System.Drawing.Size(91, 32);
+            this.labelStopwatch.Size = new System.Drawing.Size(164, 34);
             this.labelStopwatch.TabIndex = 8;
             this.labelStopwatch.Text = "00.000";
+            this.labelStopwatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // dataGridHP
+            // button1
             // 
-            this.dataGridHP.AllowUserToAddRows = false;
-            this.dataGridHP.AllowUserToDeleteRows = false;
-            this.dataGridHP.AllowUserToResizeColumns = false;
-            this.dataGridHP.AllowUserToResizeRows = false;
-            this.dataGridHP.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridHP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridHP.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2});
-            this.dataGridHP.Location = new System.Drawing.Point(12, 172);
-            this.dataGridHP.Name = "dataGridHP";
-            this.dataGridHP.ReadOnly = true;
-            this.dataGridHP.RowHeadersVisible = false;
-            this.dataGridHP.RowTemplate.Height = 25;
-            this.dataGridHP.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridHP.Size = new System.Drawing.Size(164, 252);
-            this.dataGridHP.TabIndex = 7;
+            this.button1.Location = new System.Drawing.Point(12, 143);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(164, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Kill Zack (CTRL+Space)";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 449);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.labelStopwatch);
             this.Controls.Add(this.checkBoxInstantBattleSkip);
             this.Controls.Add(this.checkBoxSkipBattles);
-            this.Controls.Add(this.labelBattleState);
             this.Controls.Add(this.dataGridElapsed);
             this.Controls.Add(dataGridHP);
             this.Controls.Add(this.checkBoxInstantDeath);
@@ -202,10 +219,10 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "CCFF7R Battle Timer";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridHP)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElapsed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridHP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,12 +236,13 @@
         private CheckBox checkBoxInstantDeath;
         private DataGridView dataGridElapsed;
         private DataGridView dataGridHP;
-        private Label labelBattleState;
         private DataGridViewTextBoxColumn Elapsed;
         private CheckBox checkBoxSkipBattles;
         private CheckBox checkBoxInstantBattleSkip;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private Label labelStopwatch;
+        private ToolStripStatusLabel battleStateLabel;
+        private Button button1;
     }
 }
